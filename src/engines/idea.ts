@@ -8,7 +8,7 @@ if (savedConversations) {
 	conversations = savedConversations;
 }
 
-const userInput = "Generate one unique, creative website idea that can be built using HTML, CSS, and JavaScript. Focus on making the it highly engaging, interactive, and providing a strong 'wow' factor for users. Keep the idea practical to build but innovative in functionality and user experience. Feel free to incorporate libraries such as Three.js, animation libraries, and Anime.js to enhance interactivity and creativity. You will be instructing an LLM to make this idea, so give enough details for it to be able to do it";
+const userInput = "Generate one unique, creative website idea that can be built using HTML, CSS, and JavaScript. Focus on making the it highly engaging, interactive, and providing a strong 'wow' factor for users. Keep the idea practical to build but innovative in functionality and user experience. Do not use any external assets unless they are libraries. Feel free to incorporate libraries such as Three.js, animation libraries, and Anime.js to enhance interactivity and creativity. You will be instructing an LLM to make this idea, so give enough details for it to be able to do it";
 const prompt = "You are an artist who creates art with javascript. You showcase your innovative and unique ideas through the browser and are master at all technologies related to web/javascript and push it to its limits to showcase your art.";
 
 export const getIdea = async () => {

@@ -1,5 +1,3 @@
-import type { WebsiteCode } from "./engines";
-
 export class GitHub {
 	urls: {
 		commits: string;
@@ -21,7 +19,10 @@ export class GitHub {
 		};
 	}
 
-	async commit(website: WebsiteCode) {
+	async commit(
+		name: string,
+		files: Array<{ path: string; content: string }>
+	) {
 		const { urls, headers } = this;
 
 		const {
@@ -41,8 +42,8 @@ export class GitHub {
 			},
 			body: JSON.stringify({
 				base_tree: treeSha,
-				tree: website.files.map(({ content, name }) => ({
-					path: `projects/${website.name}/${name}`,
+				tree: files.map(({ content, path }) => ({
+					path,
 					content,
 					mode: "100644",
 					type: "blob",
@@ -57,7 +58,7 @@ export class GitHub {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				message: `Create ${website.name}`,
+				message: name,
 				tree: newTreeSha,
 				parents: [currentCommitSha],
 			}),

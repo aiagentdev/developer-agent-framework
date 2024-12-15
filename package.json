@@ -1,0 +1,39 @@
+{
+	"name": "developer-agent-framework",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"dev": "tsx watch src/index.ts",
+		"build": "run-s clean build:*",
+		"build:ts": "rollup -c",
+		"lint": "biome check --write .",
+		"clean": "rimraf dist",
+		"css": "npx tailwindcss -i ./css/input.css -o ./css/tailwind.css --watch"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@biomejs/biome": "1.8.3",
+		"@swc/core": "^1.6.13",
+		"@types/node": "^20.14.10",
+		"@types/rollup-plugin-auto-external": "^2.0.5",
+		"npm-run-all": "^4.1.5",
+		"rimraf": "^5.0.8",
+		"rollup": "^4.18.0",
+		"rollup-plugin-auto-external": "^2.0.0",
+		"rollup-plugin-swc3": "^0.11.2",
+		"tailwindcss": "^3.4.16",
+		"tsx": "^4.19.2",
+		"typescript": "^5.7.2"
+	},
+	"dependencies": {
+		"agent-twitter-client": "^0.0.16",
+		"dotenv": "^16.4.7",
+		"openai": "^4.76.3",
+		"tough-cookie": "^4.1.2",
+		"twitter-api-v2": "^1.18.2",
+		"zod": "^3.24.1"
+	}
+}

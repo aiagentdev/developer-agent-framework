@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title></title>
+		<link rel="stylesheet" href="/css/tailwind.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+	<body class="bg-black font-['Roboto_Mono']">
+		<div
+			class="p-4 text-green-400 flex flex-col items-center justify-center"
+		>
+			<div
+				class="flex flex-col justify-center items-center max-w-5xl w-full"
+			>
+				<div
+					class="max-w-xl w-full flex flex-col border-green-500 border-2 p-4 rounded-lg mt-20 items-start"
+				>
+					<h3 class="text-xl font-bold text-green-400 mt-2 mb-2">
+						Generated Projects
+					</h3>
+
+					<div class="text-green-200 flex flex-col gap-2" id="projects">
+						<template id="project">
+							<div id="%name%" class="flex flex-col">
+								<span class="text-lg underline">%name%</span>
+								<span>%description%</span>
+								<div class="ml-4 flex flex-col">
+									<a href="%url%" target="_blank">Website</a>
+									<a href="%readme%" target="_blank"
+										>GitHub</a
+									>
+								</div>
+							</div>
+						</template>
+					</div>
+
+					<div class="w-full flex justify-center items-center mt-4">
+						<button
+							id="prev-page"
+							class="text-white inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-8 rounded-md px-3 text-xs bg-gradient-to-r from-green-800 to-green-600 shadow-lg hover:from-green-700 hover:to-green-500 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors duration-200 w-24 mr-2"
+						>
+							<svg
+								width="15"
+								height="15"
+								viewBox="0 0 15 15"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+								class="mr-2 h-4 w-4"
+							>
+								<path
+									d="M8.84182 3.13514C9.04327 3.32401 9.05348 3.64042 8.86462 3.84188L5.43521 7.49991L8.86462 11.1579C9.05348 11.3594 9.04327 11.6758 8.84182 11.8647C8.64036 12.0535 8.32394 12.0433 8.13508 11.8419L4.38508 7.84188C4.20477 7.64955 4.20477 7.35027 4.38508 7.15794L8.13508 3.15794C8.32394 2.95648 8.64036 2.94628 8.84182 3.13514Z"
+									fill="currentColor"
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+								></path>
+							</svg>
+							Prev
+						</button>
+						<span id="page-text" class="mx-2 text-sm text-green-300"
+							>0 of 0</span
+						>
+						<button
+							id="next-page"
+							class="text-white inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-8 rounded-md px-3 text-xs bg-gradient-to-r from-green-800 to-green-600 shadow-lg hover:from-green-700 hover:to-green-500 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors duration-200 w-24 ml-2"
+						>
+							Next
+							<svg
+								width="15"
+								height="15"
+								viewBox="0 0 15 15"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+								class="ml-2 h-4 w-4"
+							>
+								<path
+									d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z"
+									fill="currentColor"
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+								></path>
+							</svg>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			const projectsElement = document.querySelector("#projects");
+			const projectTemplate =
+				document.querySelector("#project").content.firstElementChild;
+
+			const projects = [];
+			const fetchProjects = async () => {
+				try {
+					const json = await fetch("./data/projects.json").then(
+						(res) => res.json()
+					);
+
+					return json;
+				} catch {
+					return [];
+				}
+			};
+
+			const pageTextElement = document.querySelector("#page-text");
+			const nextPageElement = document.querySelector("#next-page");
+			const prevPageElement = document.querySelector("#prev-page");
+
+			let amountPerPage = 4;
+			let pageIdx = 0;
+			const pages = [];
+
+			const nextPage = () => {
+				if (pageIdx < pages.length - 1) {
+					pageIdx++;
+
+					hideAll();
+					showPage();
+
+					setPageText();
+				}
+			};
+
+			const prevPage = () => {
+				if (pageIdx > 0) {
+					pageIdx--;
+
+					hideAll();
+					showPage();
+					setPageText();
+				}
+			};
+
+			const setPageText = () => {
+				pageTextElement.innerText = `${pageIdx + 1} of ${pages.length}`;
+			};
+
+			nextPageElement.addEventListener("click", nextPage);
+			prevPageElement.addEventListener("click", prevPage);
+
+			const hideAll = () => {
+				for (const page of pages) {
+					for (const project of page) {
+						const element = document.getElementById(project.name);
+						if (!element) {
+							continue;
+						}
+						element.style.display = "none";
+					}
+				}
+			};
+
+			const showPage = () => {
+				const page = pages[pageIdx];
+				if (!page) {
+					return;
+				}
+
+				for (const project of page) {
+					const element = document.getElementById(project.name);
+					if (!element) {
+						continue;
+					}
+					element.style.display = "flex";
+				}
+			};
+
+			(async () => {
+				const projects = await fetchProjects();
+				for (let i = 0; i < projects.length; i += amountPerPage) {
+					pages.push(projects.slice(i, i + amountPerPage));
+				}
+
+				for (const { name, description } of projects) {
+					const projectELement = projectTemplate.cloneNode(true);
+
+					projectsElement.appendChild(projectELement);
+					projectELement.outerHTML = projectELement.outerHTML
+						.replaceAll("%url%", `/projects/${name}`)
+						.replaceAll("%name%", name)
+						.replaceAll("%description%", description)
+						.replaceAll(
+							"%readme%",
+							`https://github.com/aiagentdev/DeveloperAgentFramework/tree/main/projects/${name}`
+						);
+				}
+
+				hideAll();
+				showPage();
+				setPageText();
+			})();
+		</script>
+	</body>
+</html>

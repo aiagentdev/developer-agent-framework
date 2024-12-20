@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crypto Kaleidoscope Visualization</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container-fluid">
+    <h1 class="text-center my-4">Crypto Kaleidoscope Visualization</h1>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="controls">
+          <h3>Controls</h3>
+          <div class="mb-3">
+            <label for="crypto-select" class="form-label">Select Cryptocurrency</label>
+            <select id="crypto-select" class="form-select">
+              <!-- Options will be populated dynamically -->
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="animation-speed" class="form-label">Animation Speed</label>
+            <input type="range" class="form-range" min="1" max="10" id="animation-speed">
+          </div>
+          <div class="mb-3">
+            <label for="pattern-complexity" class="form-label">Pattern Complexity</label>
+            <input type="range" class="form-range" min="1" max="10" id="pattern-complexity">
+          </div>
+          <button id="pause-button" class="btn btn-primary">Pause</button>
+          <button id="capture-button" class="btn btn-secondary">Capture Snapshot</button>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <canvas id="kaleidoscope-canvas"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

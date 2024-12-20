@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crypto Transaction Visualizer and Analyzer</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- D3.js Library -->
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <!-- GSAP Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+</head>
+<body>
+  <div id="landing-animation">
+    <canvas id="canvas"></canvas>
+    <div id="overlay">
+      <h1>Crypto Transaction Visualizer and Analyzer</h1>
+      <button id="enter-button">Enter App</button>
+    </div>
+  </div>
+  <div id="app" class="hidden">
+    <div id="controls">
+      <h2>Analyze Transactions</h2>
+      <form id="input-form">
+        <label for="address">Wallet Address / Transaction Hash:</label>
+        <input type="text" id="address" name="address" required />
+        <label for="depth">Depth Level:</label>
+        <select id="depth" name="depth">
+          <option value="1">1 Degree</option>
+          <option value="2">2 Degrees</option>
+          <option value="3">3 Degrees</option>
+        </select>
+        <button type="submit">Visualize</button>
+      </form>
+      <div id="customization">
+        <h3>Customize Graph Appearance</h3>
+        <label for="theme">Theme:</label>
+        <select id="theme">
+          <option value="dark">Dark Mode</option>
+          <option value="light">Light Mode</option>
+          <option value="neon">Neon Mode</option>
+        </select>
+        <label for="node-size">Node Size:</label>
+        <input type="range" id="node-size" min="5" max="20" value="10" />
+        <label for="edge-thickness">Edge Thickness:</label>
+        <input type="range" id="edge-thickness" min="1" max="10" value="3" />
+      </div>
+    </div>
+    <div id="visualization">
+      <svg id="graph"></svg>
+    </div>
+    <div id="dashboard">
+      <h2>Insights Dashboard</h2>
+      <ul id="insights">
+        <!-- Dynamic insights will be added here -->
+      </ul>
+    </div>
+  </div>
+  <script src="scripts.js"></script>
+</body>
+</html>
